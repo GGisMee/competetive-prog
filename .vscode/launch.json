@@ -1,0 +1,61 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}/${fileBasenameNoExtension}",
+            "preLaunchTask": "Nix G++ build",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/nix/store/752pzfp1h1qacqbdh8jw93snrj1498kj-gdb-15.2/bin/gdb",
+            "setupCommands": [
+                {
+                    "description": "Verifiera laddning",
+                    "text": "-interpreter-exec console \"echo LADDAR_SKIP_OCH_SUBSTITUTE\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Enable pretty-printing",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Dölj källkod för Nix-paket (inklusive stdlib)",
+                    "text": "-interpreter-exec console \"set substitute-path /nix/store /ingensstans\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Hoppa över filer i Nix store (nivå 1 include)",
+                    "text": "-interpreter-exec console \"skip -gfi /nix/store/*/include/*\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Hoppa över filer i Nix store (nivå 2 include)",
+                    "text": "-interpreter-exec console \"skip -gfi /nix/store/*/include/*/*\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Hoppa över filer i Nix store (nivå 3 include)",
+                    "text": "-interpreter-exec console \"skip -gfi /nix/store/*/include/*/*/*\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Hoppa över filer i Nix store (nivå 4 include)",
+                    "text": "-interpreter-exec console \"skip -gfi /nix/store/*/include/*/*/*/*\"",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Hoppa över filer i Nix store (nivå 5 include)",
+                    "text": "-interpreter-exec console \"skip -gfi /nix/store/*/include/*/*/*/*/*\"",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}
