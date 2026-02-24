@@ -3,7 +3,7 @@
 let
   # Skapa en riktig körbar fil istället för ett alias
   gpp = pkgs.writeShellScriptBin "gpp" ''
-    exec ${pkgs.gcc}/bin/g++ -std=c++20 "$@"
+    exec ${pkgs.gcc}/bin/g++ -std=c++20 -g "$@"
   '';
 in
 pkgs.mkShell {
