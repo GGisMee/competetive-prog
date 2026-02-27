@@ -12,7 +12,7 @@
             "preLaunchTask": "Nix G++ build",
             "console": "integratedTerminal",
             "initCommands": [
-                "settings set target.process.thread.step-avoid-regexp ^std::"
+                "settings set target.process.thread.step-avoid-regexp ^(std::|__gnu_cxx::|__)"
             ]
         },
         {
