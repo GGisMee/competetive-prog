@@ -16,7 +16,7 @@ int main() {
   int n;
   int v;
   cin >> t;
-  rep(i, 0, t) {
+  while (t--) {
     vector<int> arr;
     cin >> n;
     rep(j, 0, n) {
