@@ -4,39 +4,19 @@ typedef unsigned long long ull;
 using namespace std;
 #define rep(i, a, b) for (int i = a; i < b; i++)
 
-// 1
-// 8
-// 3 2 2 3 7 3 6 7
-
-// 1
-// 5
-// 1 2 3 4 5
-
-int in_prod(int k, vector<int> &a) {
-  int n = 0; // number in product
-  bool changed = true;
-  int prev;
-  while (changed) {
-    changed = false;
-    for (int a_i : a) {
-      if (a_i == 1) {
-        if (k == 1) {
-          return 1;
-        }
-      } else if ((k % a_i) == 0) {
-        prev = k;
-        k /= a_i;
-        if (prev != k) {
-          changed = true;
-        }
-        ++n;
-        if (k == 1) {
-          return n;
-        }
-      }
-    }
+int f(vector<int> &a, vector<int> &d) {
+  if (a[0] == 1) {
+    d[1] = 1;
+  } else {
+    d[1] = 0;
   }
-  return n;
+  queue<int> q;
+
+  for (int a_i : a) {
+    rep(i, 1, a.size() + 1) { i++; }
+  }
+
+  return 0;
 }
 
 int main() {
@@ -48,18 +28,13 @@ int main() {
     vector<int> a(n);
     rep(i, 0, n) { cin >> a[i]; }
 
+    vector<int> d(n + 1, -1); // vektor med avstånd till tal
+
     // Sort and remove duplicates
-    sort(a.begin(), a.end(), greater<>());
+    sort(a.begin(), a.end());
     auto last = unique(a.begin(), a.end());
     a.erase(last, a.end());
-    rep(i, 1, n + 1) {
-      int num = in_prod(i, a);
-      if (num == 0) {
-        cout << "-1 ";
-      } else {
-        cout << num << ' ';
-      }
-    }
-    cout << '\n';
+
+    f(a, d);
   }
 }
