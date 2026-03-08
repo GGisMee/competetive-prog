@@ -13,7 +13,12 @@ int f(vector<int> &a, vector<int> &d) {
   queue<int> q;
 
   for (int a_i : a) {
-    rep(i, 1, a.size() + 1) { i++; }
+    // tömmer kön
+    queue<int>().swap(q);
+
+    rep(j, 2, a.size() + 1) { q.push(j); }
+
+    while
   }
 
   return 0;
