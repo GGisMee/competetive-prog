@@ -7,49 +7,27 @@ using namespace std;
 // 8
 // 3 2 2 3 7 3 6 7
 
-int f(vector<int> &a, vector<int> &dist) {
-  if (a[0] == 1) {
-    d[1] = 1;
-  } else {
-    d[1] = 0;
-  }
-  queue<int> q;
+// 1
+// 10
+// 2 1 2 1 3 5 5 7 7 7
 
-  for (int a_i : a) {
-    // tömmer kön
-    queue<int>().swap(q);
-
-    rep(j, 2, a.size() + 1) { q.push(j); }
-
-    int depth = 0; // multiples
-
-    while (!q.empty()) {
-      bool found = false;
-      // I ett visst djup
-      int level_size = q.size();
-      rep(i, 0, level_size) {
-        int d = q.front();
-        q.pop();
-        //
-        if ((a_i % d) != 0) { // fel d som ej delar
-          continue;
-        } else if (dist[a_i] != -1) { // redan mappad;
-          break;
-        } else if (a_i / d == 1) {
-          found = true;
-          break;
-        } else {
-          q.push(a_i / d);
-        }
-      }
-      if (found) {
+// lägger till värden i dist under max_val
+void populate(vector<int> &dist, vector<int> &a, int stop) {
+  rep(i, 1, stop / a[0] + 1) { // Vi multiplicerar med värden >= a[0]
+    if (dist[i] == -1) {
+      continue;
+    }
+    for (int a_j : a) {
+      int m = a_j * i;
+      if (m > stop) {
         break;
+      } else if (dist[m] == -1) {
+        dist[m] = dist[a_j] + dist[i];
+      } else {
+        dist[m] = min(dist[a_j] + dist[i], dist[m]);
       }
-      ++depth;
     }
   }
-
-  return 0;
 }
 
 int main() {
@@ -68,6 +46,11 @@ int main() {
     auto last = unique(a.begin(), a.end());
     a.erase(last, a.end());
 
-    f(a, dist);
+    for (int a_i : a) {
+      dist[a_i] = 1;
+    }
+    populate(dist, a, n);
+    rep(i, 1, n + 1) { cout << dist[i] << ' '; }
+    cout << '\n';
   }
 }
