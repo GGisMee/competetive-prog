@@ -14,17 +14,25 @@ int main() {
   rep(i, 0, N) { cin >> x[i] >> t[i]; }
   // time to reach portal i in nether and overworld
   ll t_nether = x[0] * 8 + t[0]; // tid att ta sig till nether genom första
-  ll t_overw_under, t_overw_over;
+  ll t_overw = x[0];
 
   int i = 1;
-  while (i < N) {
-    if (8 * x[i] > S) {
-      in_between = true;
-      t_overw_under = t_nether + t[i];
-      t_nether = min(t_nether, x[i] * 8 + t[i]);
-      t_overw_over = t_nether + t[N - 1]; // We reached the last
-      break;
-    }
-    t_nether = min(t_nether, x[i] * 8 + t[i]);
+  while (i != N && (8 * x[i] > S)) { // tills vi är vid portalen innan S
+    // från förra portal i nether till nuvarande eller från overworld upp till
+    // nuvarande
+    t_nether = min(t_nether + (x[i] - x[i - 1]), x[i] * 8 + t[i]);
+    t_overw =
+        min(t_nether + t[i], x[i] * 8); // Från nether eller rakt från spawn
+    ++i;
+  }
+  // i är portal innan S
+  if (i == N) {                               // S ej mellan portaler
+    cout << t_overw + 8 * (S - x[i]) << '\n'; // Ta sig till S.
+  } else {
+    // Tid till portal i overworld som är efter S
+    ll t_overw_over = t_nether + (x[i + 1] - x[i]) + t[i + 1];
+    // Minsta mellan portal över och under
+    ll t = min(t_overw + (S - x[i]), t_overw_over + (x[i + 1] - S));
+    cout << t << '\n';
   }
 }
