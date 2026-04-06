@@ -6,7 +6,7 @@ using namespace std;
 #define rep(i, a, b) for (ll i = a; i < b; i++)
 
 // Returns next idx for new number after the one att idx i.
-ll next_idx_num(ll i, vector<ll> a, ll n) {
+ll next_idx_num(ll i, vector<ll> &a, ll n) {
   ll v = a[i];
   rep(j, i + 1, n) {
     if (a[j] != v) {
@@ -16,7 +16,7 @@ ll next_idx_num(ll i, vector<ll> a, ll n) {
   return 0;
 }
 
-bool possible(vector<ll> p, vector<ll> a, ll n) {
+bool possible(vector<ll> p, vector<ll> &a, ll n) {
   ll num_idx = 0;
   rep(i, 0, n) {
     if (a[num_idx] == p[i]) {
