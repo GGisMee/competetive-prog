@@ -1,74 +1,51 @@
 #include <bits/stdc++.h>
-#include <vector>
 typedef long long ll;
-typedef unsigned long long ull;
 using namespace std;
 #define rep(i, a, b) for (ll i = a; i < b; i++)
-
 // 1
 // 8
-// ((())())
-//
-// 1
-// 10
-// ((()())())
+// (())(())
+ll find_sub(string &s, ll n) { // Använd string istället för vector<bool>
+  ll needed = 1;
+  while (needed < n && s[needed] == '(') {
+    needed++;
+  }
 
-//
+  if (needed == 0)
+    return -1;
 
-// ll find_sub(vector<bool> b, ll n) {
-//   ll pos = 0;    // index position in b
-//   ll needed = 1; // Number of brackets needed in subsequence
-//   rep(i, 0, n) {
-//     if (!b[i]) // ) parantes
-//       break;
-//     else // ( parantes
-//       ++needed;
-//   }
-//   pos = needed;
-//
-//   bool last_l_found = false;
-//   rep(i, pos, n) {
-//     if (b[i]) {
-//       last_l_found = true;
-//       pos = i + 1;
-//       break;
-//     }
-//   }
-//   if (!last_l_found)
-//     return -1;
-//
-//   ll r_found = 0;
-//   rep(i, pos, n) {
-//     if (!b[i]) {
-//       ++r_found;
-//       if (r_found == needed) {
-//         return 2 * needed;
-//       }
-//     }
-//   }
-//   return -1;
-// }
-
-ll find_sub(vector<bool> b, ll n) {
-  ll needed = 0; // Needed
+  ll num_l = 0;
+  ll num_r = 0;
   rep(i, 0, n) {
-    if (!b[i]) { // )
-      break;
+    if (s[i] == ')')
+      ++num_l;
+  }
+  ll M = 0;
+  rep(i, 0, n) {
+    if (s[i] == ')') {
+      --num_l;
+    } else {
+      ++num_r;
     }
-    ++needed;
+    M = max(M, min(num_r, num_l));
   }
-  ll max_found = 0;
-  ll current = needed - 1;
-  rep(i, needed + 1, n) {
-    max_found = max(current, max_found);
-    if (b[i])
-      ++current;
-    else
-      --current;
-  }
-  return (max_found > needed) ? 2 * max_found : -1;
-}
 
+  if (M > needed)
+    return 2 * M;
+
+  // edge case
+  ll pos = -1;
+  bool l_found = false;
+  rep(i, needed + 1, n) {
+    if (s[i] == '(' && !l_found) {
+      l_found = true;
+    }
+    if (l_found) {
+    }
+  }
+
+  return (M > needed) ? 2 * M : -1;
+}
 int main() {
   ios_base::sync_with_stdio(false);
   cin.tie(NULL);
@@ -77,12 +54,8 @@ int main() {
   while (t--) {
     ll n;
     cin >> n;
-    vector<bool> b(n);
-    rep(i, 0, n) {
-      char c;
-      cin >> c;
-      b[i] = (c == '(');
-    }
-    cout << find_sub(b, n) << '\n';
+    string s;
+    cin >> s;
+    cout << find_sub(s, n) << '\n';
   }
 }
